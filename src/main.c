@@ -4,6 +4,8 @@
 #include <X11/Xutil.h>
 
 #include <ctype.h>
+#include <err.h>
+#include <iso646.h>
 #include <limits.h>
 #include <math.h>
 #include <pwd.h>
@@ -12,8 +14,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <iso646.h>
-#include <err.h>
 
 #include <sys/types.h>
 
@@ -46,8 +46,8 @@ bool draw_needed = true;
 
 
 XrmOptionDescRec options[] = {
-  {"-fg",  "*foreground", XrmoptionSepArg, NULL},
-  {"-bg",  "*background", XrmoptionSepArg, NULL},
+  {          "-fg",  "*foreground", XrmoptionSepArg, NULL},
+  {          "-bg",  "*background", XrmoptionSepArg, NULL},
   {"-transparency", "*transparent", XrmoptionSepArg, NULL}
 };
 
@@ -75,7 +75,8 @@ bool resource_not_specified(const char * resource_value)
 
 bool resource_bool_get_value(const char * resource_value)
 {
-  enum {
+  enum
+  {
     n_true_values = 4
   };
   const char * true_values[] = {"on", "true", "yes", "1"};
@@ -264,10 +265,7 @@ void on_root_motion_notify(XEvent * e)
 {
   XPoint target;
   cursor_pos = (XPoint){e->xmotion.x, e->xmotion.y};
-  target = (XPoint){
-    cursor_pos.x - window_attrs.x,
-    cursor_pos.y - window_attrs.y
-  };
+  target = (XPoint){cursor_pos.x - window_attrs.x, cursor_pos.y - window_attrs.y};
   arrow_set_target(arrow, target.x, target.y);
   draw_needed = true;
 }
